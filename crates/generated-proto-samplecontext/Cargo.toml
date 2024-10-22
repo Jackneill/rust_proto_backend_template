@@ -1,0 +1,10 @@
+[package]
+name = "generated-proto-samplecontext"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+prost = { version = "0.13", default-features = true, features = [] }
+serde = { version = "1.0", default-features = false, features = ["derive"] }
+tonic = { version = "0.12", default-features = true, features = [] }
+pbjson = { version = "0.7", default-features = true, features = [] }

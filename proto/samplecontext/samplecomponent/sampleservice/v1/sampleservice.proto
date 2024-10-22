@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package samplecontext.samplecomponent.sampleservice.v1;
+
+service Sample {
+	rpc RPC(RPCRequest) returns (RPCResponse) {}
+}
+
+message RPCRequest {}
+
+message RPCResponse {}

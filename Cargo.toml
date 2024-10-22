@@ -1,0 +1,19 @@
+[workspace]
+members = [
+	"crates/samplecontext-samplecomponent-sampleservice-v1",
+	"crates/common",
+	"crates/generated-proto-samplecontext",
+]
+resolver = "2"
+
+[profile.release]
+opt-level = 3
+debug = 2
+overflow-checks = false
+lto = "fat"
+panic = "unwind"
+incremental = false
+
+[profile.dev]
+incremental = true
+lto = "thin"

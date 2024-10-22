@@ -1,0 +1,3 @@
+xyz.localhost {
+	reverse_proxy /v1/xyz xyz-v1:20001
+}

@@ -1,0 +1,22 @@
+[package]
+name = "samplecontext-samplecomponent-sampleservice-v1"
+version = "1.0.0"
+edition = "2021"
+
+[dependencies]
+common = { path = "../common", default-features = false, features = [] }
+generated-proto-samplecontext = { path = "../generated-proto-samplecontext", default-features = false, features = [
+] }
+
+clap = { version = "4.5", default-features = true, features = [
+	"unicode",
+	"derive",
+	"std",
+	"env",
+] }
+anyhow = { version = "1.0", default-features = false, features = [] }
+tokio = { version = "1.38", default-features = true, features = ["full"] }
+tonic = { version = "0.12", default-features = true, features = [] }
+tokio-stream = { version = "0.1", default-features = true, features = [] }
+tracing = { version = "0.1", default-features = true, features = [] }
+tonic-health = { version = "0.12", default-features = true, features = [] }

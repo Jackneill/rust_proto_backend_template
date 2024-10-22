@@ -1,0 +1,37 @@
+version: "3.9"
+services:
+  caddy:
+    image: caddy:2.8.4-alpine
+    restart: unless-stopped
+    ports:
+      - "127.0.0.1:80:80"
+      - "127.0.0.1:80:80/udp"
+      - "127.0.0.1:443:443"
+      - "127.0.0.1:443:443/udp"
+    healthcheck:
+      test: nc -z 127.0.0.1 443 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    networks:
+      - internalnet
+    volumes:
+      - $PWD/assets/caddy/data:/data/caddy
+      - $PWD/Caddyfile:/etc/caddy/Caddyfile
+
+  samplecontext-samplecomponent-sampleservice-v1:
+    image: samplecontext-samplecomponent-sampleservice-v1:latest
+    restart: unless-stopped
+    env_file: assets/env/samplecontext-samplecomponent-sampleservice-v1.env
+    healthcheck:
+      test: nc -z samplecontext-samplecomponent-sampleservice-v1 20001 || exit -1
+      start_period: 15s
+      interval: 5s
+      timeout: 10s
+      retries: 3
+    networks:
+      - internalnet
+
+networks:
+  internalnet:

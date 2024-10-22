@@ -1,0 +1,61 @@
+image: rust:latest
+
+services:
+  - docker:dind
+
+default:
+  interruptible: true
+  cache:
+    key: ${CI_COMMIT_REF_SLUG}
+    paths:
+      - .cargo
+      - target
+  before_script:
+    - rustc --version
+    - cargo --version
+    - cargo install just
+
+stages:
+  - security-check
+  - lint
+  - build
+  - test
+  - bench
+
+sast:
+  stage: security-check
+  allow_failure: false
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
+secret_detection:
+  stage: security-check
+  allow_failure: false
+  variables:
+    SECRETS_ANALYZER_VERSION: "4.5"
+  include:
+    - template: Jobs/Secret-Detection.gitlab-ci.yml
+
+lint:
+  stage: lint
+  allow_failure: false
+  script:
+    - just lint
+
+test:
+  stage: test
+  allow_failure: false
+  script:
+    - just test
+
+build:
+  stage: build
+  allow_failure: false
+  script:
+    - just build-release
+
+bench:
+  stage: bench
+  allow_failure: false
+  script:
+    - just bench
